@@ -1,0 +1,12 @@
+google-cloud-storage
+pdf2image
+pypdf2
+fastapi
+pytest-shutil
+uvicorn
+http3
+python-multipart
+PyMuPDF==1.20.0
+pillow
+py_eureka_client
+nest-asyncio
