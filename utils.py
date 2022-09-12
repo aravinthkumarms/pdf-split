@@ -60,7 +60,7 @@ async def wrkFlwReq(step, fileId):
 async def updateWrkFlwDtl(fileId, request):
     try:
         res = requests.post(
-            f"http://localhost:8000/blob/createwrkflw/{fileId}/v1", json=request)
+            f"http://host.docker.internal:8000/blob/createwrkflw/{fileId}/v1", json=request)
         logging.info(
             "Hitting Data API for workflow details")
         logging.info(res.json())

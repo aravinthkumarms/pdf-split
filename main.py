@@ -113,12 +113,12 @@ async def download(filename: str):
 async def getFileId(fileName: str):
     try:
         res = requests.get(
-            f"http://localhost:8000/blob/response/v2/?fileName={fileName}")
+            f"http://host.docker.internal:8000/blob/response/v2/?fileName={fileName}")
         jsonRes = dict(json.loads(res.text))
         logging.info(jsonRes)
     except Exception as e:
         logging.error(e)
-        return raiseExceptionInternalServerError()
+        return raiseExceptionInternalServerError("Internal Server Error")
     return jsonRes['fileId']
 
 
@@ -194,6 +194,7 @@ async def upload(files: UploadFile):
         return raiseExceptionBadRequest("No file found")
 
 
+@DeprecationWarning
 @app.get("/split/file/v1/{filename}")
 async def split(filename: str):
     fileName = filename
@@ -268,6 +269,7 @@ async def upload(fileName: str):
                 f"Uploaded to {splitBucketName}/{fileName}/{imageName} and {splitBucketName}/{fileName}/thumbnails/{thumbnailName}")
             os.remove(f"temp/{imageName}")
             os.remove(f"temp/{thumbnailName}")
+            logging.info(f"removed {imageName} and {thumbnailName}")
         os.remove(f"temp/{fileName}")
         return {"connection": "success",
                 "message": "Uploading Splitted Images Successful"}
